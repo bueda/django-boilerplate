@@ -20,8 +20,8 @@ env.unit = "boilerplate"
 env.path = "/var/django/%(unit)s" % env
 env.scm = "git@github.com:bueda/%(unit)s.git" % env
 env.scm_http_url = "http://github.com/bueda/%(unit)s" % env
-env.wsgi = "wsgi/%(unit)s.wsgi" % env
 env.root_dir = os.path.abspath(os.path.dirname(__file__))
+env.test_runner = _django_test_runner
 
 env.pip_requirements = ["requirements/common.txt",
         "vendor/allo/pip-requirements.txt",]
