@@ -214,6 +214,10 @@ SECRET_KEY = 'TODO-generate-a-new-secret-key'
 LOGIN_URL = '/login'
 LOGIN_REDIRECT_URL = '/'
 
+# Sessions
+
+SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+
 # Middleware
 
 middleware_list = [
@@ -272,7 +276,6 @@ apps_list = [
         'django.contrib.auth',
         'django.contrib.admin',
         'django.contrib.contenttypes',
-        'django.contrib.sessions',
         'django.contrib.sites',
         'django.contrib.markup',
         'django.contrib.messages',
