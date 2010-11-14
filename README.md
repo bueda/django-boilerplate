@@ -165,3 +165,18 @@ The standard Django `manage.py`.
 
 Many good default settings for Django applications - check the file for more
 detailed documentation.
+
+## Contributing
+
+If you have improvements or bug fixes:
+
+* Fork the repository on GitHub
+* File an issue for the bug fix/feature request in GitHub
+* Create a topic branch
+* Push your modifications to that branch
+* Send a pull request
+
+## Authors
+
+* [Bueda Inc.](http://www.bueda.com)
+* Christopher Peplin, peplin@bueda.com, @[peplin](http://twitter.com/peplin)
