@@ -127,7 +127,7 @@ when you don't want to wipe out the site-wide defaults in `site_js`.
 
 ### vendor
 
-Python package dependencies installed as git submodules. pip's support for git
+Python package dependencies loaded as git submodules. pip's support for git
 repositories is somewhat unreliable, and if the specific package is your own
 code it can be a bit easier to debug if it's all in one place (and not off in a
 virtualenv). 
@@ -137,6 +137,9 @@ At Bueda we collect general webapp helpers and views in the separate package
 example of a Python package as a git submodule.
 
 Any directory in `vendor/` is added to the `PYTHONPATH` by `environment.py`.
+
+The packages are *not* installed with pip, however, so if they require any
+compilation (e.g. C/C++ extensions) this method will not work.
 
 ### Files
 
