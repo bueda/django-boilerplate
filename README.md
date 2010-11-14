@@ -4,11 +4,17 @@ django-boilerplate -- a standard layout for Django apps
 ## Description
 
 django-boilerplate is an attempt to set up an convention for Django app layouts,
-to assist in writing utilites to deploy such applications. A bit of convention
+to assist in writing utilities to deploy such applications. A bit of convention
 can go a long way, if one method is not better than another.
 
-This app layout is the one assumed by [buedafab](https://github.com/bueda/ops),
-and is somewhat of a sister project.
+This app layout is the one assumed by [buedafab](https://github.com/bueda/ops).
+
+### Related Projects
+
+[buedafab](https://github.com/bueda/ops)
+[tornado-boilerplate](https://github.com/bueda/tornado-boilerplate)
+[python-webapp-etc](https://github.com/bueda/python-webapp-etc)
+[comrade](https://github.com/bueda/django-comrade)
 
 ## Acknowledgements
 
@@ -84,9 +90,9 @@ pip requirements files, optionally one for each app environment. The
 
 Our Fabfile (see below) is set up to install the project's dependencies from
 these files. It's an attempt to standardize the location for dependencies like
-Rails' `Gemfile`. We specificially avoid also listing the dependencies in the
-README of the project, since a list there isn't actually checked programatically
-or ever installed, so it tends to quickly become out of date.
+Rails' `Gemfile`. We specifically avoid also listing the dependencies in the
+README of the project, since a list there isn't actually checked
+programmatically or ever installed, so it tends to quickly become out of date.
 
 ### templates
 
@@ -96,17 +102,17 @@ these blocks:
 
 #### <head>
 
-`title` - Text for the browser title bar. You can set a default here and append/prepend to
-it in sub-templates using `{{ super }}`.
+`title` - Text for the browser title bar. You can set a default here and
+append/prepend to it in sub-templates using `{{ super }}`.
 
-`site_css` - Primary CSS files for the site. By defaut, includes `media/css/reset.css` and
-`media/css/base.css`. 
+`site_css` - Primary CSS files for the site. By default, includes
+`media/css/reset.css` and `media/css/base.css`. 
 
-`css` - Optional page-specific CSS - empty by default. Use this block if a page needs an extra CSS file
-or two, but doesn't want to wipe out the files already linked via the `site_css`
-block.
+`css` - Optional page-specific CSS - empty by default. Use this block if a page
+needs an extra CSS file or two, but doesn't want to wipe out the files already
+linked via the `site_css` block.
 
-`extra_head` - Any extra content for betwee the `<head>` tags.
+`extra_head` - Any extra content for between the `<head>` tags.
 
 #### <body>
 
@@ -116,14 +122,15 @@ block.
 
 `footer` - After `content`, inside a `div` with the ID `footer`.
 
-`site_js` - After all body content, includes site-wide Javascript files. By default,
-includes `media/js/application.js` and jQuery. In deployed environments, links
-to a copy of jQuery on Google's CDN. If running in solo development mode, links
-to a local copy of jQuery from the `media/` directory - becuase the best way to
-fight snakes on a plane is with jQuery on a plane.
+`site_js` - After all body content, includes site-wide Javascript files. By
+default, includes `media/js/application.js` and jQuery. In deployed
+environments, links to a copy of jQuery on Google's CDN. If running in solo
+development mode, links to a local copy of jQuery from the `media/` directory -
+because the best way to fight snakes on a plane is with jQuery on a plane.
 
-`js` - Just like the `css` block, use the `js` block for page-specific Javascript files
-when you don't want to wipe out the site-wide defaults in `site_js`.
+`js` - Just like the `css` block, use the `js` block for page-specific
+Javascript files when you don't want to wipe out the site-wide defaults in
+`site_js`.
 
 ### vendor
 
@@ -155,7 +162,7 @@ and in production (run through mod-wsgi, gunicorn, etc.).
 We use Fabric to deploy to remote servers in development, staging and production
 environments. The boilerplate Fabfile is quite thin, as most of the commands are
 imported from [buedafab](https://github.com/bueda/ops), a collection of our
-Fabric utilites.
+Fabric utilities.
 
 #### manage.py
 
