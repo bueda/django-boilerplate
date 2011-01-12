@@ -42,10 +42,13 @@ if 'DEPLOYMENT_TYPE' in os.environ:
 else:
     DEPLOYMENT = DeploymentType.SOLO
 
+def is_solo():
+    return DEPLOYMENT == DeploymentType.SOLO
+
 SITE_ID = DeploymentType.dict[DEPLOYMENT]
 
 DEBUG = DEPLOYMENT != DeploymentType.PRODUCTION
-STATIC_MEDIA_SERVER = DEPLOYMENT == DeploymentType.SOLO
+STATIC_MEDIA_SERVER = is_solo()
 TEMPLATE_DEBUG = DEBUG
 SSL_ENABLED = not DEBUG
 
@@ -59,7 +62,7 @@ else:
     LOG_LEVEL = logging.INFO
 
 # Only log to syslog if this is not a solo developer server.
-USE_SYSLOG = DEPLOYMENT != DeploymentType.SOLO
+USE_SYSLOG = not is_solo()
 
 # Cache Backend
 
@@ -70,7 +73,7 @@ CACHE_MIDDLEWARE_KEY_PREFIX = ''
 
 # Don't require developers to install memcached, and also make debugging easier
 # because cache is automatically wiped when the server reloads.
-if DEPLOYMENT == DeploymentType.SOLO:
+if is_solo():
     CACHE_BACKEND = ('locmem://?timeout=%(CACHE_TIMEOUT)d'
             '&max_entries=%(MAX_CACHE_ENTRIES)d' % locals())
 else:
@@ -79,18 +82,17 @@ else:
 
 # E-mail Server
 
-if DEPLOYMENT != DeploymentType.SOLO:
+if is_solo():
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+else:
     EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
     EMAIL_HOST = 'smtp.gmail.com'
     EMAIL_HOST_USER = 'YOU@YOUR-SITE.com'
     EMAIL_HOST_PASSWORD = 'PASSWORD'
     EMAIL_PORT = 587
     EMAIL_USE_TLS = True
-else:
-    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 DEFAULT_FROM_EMAIL = "Bueda Support <support@bueda.com>"
-SERVER_EMAIL = "Bueda Operations <ops@bueda.com>"
 
 CONTACT_EMAIL = 'support@bueda.com'
 
@@ -173,7 +175,7 @@ CELERY_RESULT_BACKEND = "amqp"
 
 # Run tasks eagerly in development, so developers don't have to keep a celeryd
 # processing running.
-CELERY_ALWAYS_EAGER = DEPLOYMENT == DeploymentType.SOLO
+CELERY_ALWAYS_EAGER = is_solo()
 CELERY_EAGER_PROPAGATES_EXCEPTIONS = True
 
 # South
@@ -230,15 +232,15 @@ middleware_list = [
     'comrade.core.middleware.HttpMethodsMiddleware',
 ]
 
-if DEPLOYMENT != DeploymentType.SOLO:
-    middleware_list += [
-        'django.middleware.transaction.TransactionMiddleware',
-        'commonware.middleware.SetRemoteAddrFromForwardedFor',
-    ]
-else:
+if is_solo():
     middleware_list += [
         'comrade.core.middleware.ArgumentLogMiddleware',
         'debug_toolbar.middleware.DebugToolbarMiddleware',
+    ]
+else:
+    middleware_list += [
+        'django.middleware.transaction.TransactionMiddleware',
+        'commonware.middleware.SetRemoteAddrFromForwardedFor',
     ]
 
 MIDDLEWARE_CLASSES = tuple(middleware_list)
@@ -251,7 +253,7 @@ TEMPLATE_LOADERS = (
     'django.template.loaders.eggs.Loader',
 )
 
-if DEPLOYMENT != DeploymentType.SOLO:
+if not is_solo():
     TEMPLATE_LOADERS = (
         ('django.template.loaders.cached.Loader', TEMPLATE_LOADERS),
     )
@@ -286,7 +288,7 @@ apps_list = [
         'here',
 ]
 
-if DEPLOYMENT == DeploymentType.SOLO:
+if is_solo():
     apps_list += [
         'django_extensions',
         'debug_toolbar',
