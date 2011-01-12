@@ -102,10 +102,29 @@ TIME_ZONE = 'UTC'
 LANGUAGE_CODE = 'en-us'
 USE_I18N = False
 
-# Testing
+# Testing & Coverage
 
 # Use nosetests instead of unittest
 TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
+
+COVERAGE_REPORT_HTML_OUTPUT_DIR = 'coverage'
+COVERAGE_MODULE_EXCLUDES = ['tests$', 'settings$', 'urls$', 'vendor$',
+        '__init__', 'migrations', 'templates', 'django', 'debug_toolbar',
+        'core\.fixtures', 'users\.fixtures',]
+
+try:
+    import multiprocessing
+    cpu_count = multiprocessing.cpu_count()
+except ImportError:
+    cpu_count = 1
+
+NOSE_ARGS = ['--logging-clear-handlers', '--processes=%s' % cpu_count]
+
+if is_solo():
+    try:
+        os.mkdir(COVERAGE_REPORT_HTML_OUTPUT_DIR)
+    except OSError:
+        pass
 
 # Paths
 
@@ -293,6 +312,7 @@ if is_solo():
         'django_extensions',
         'debug_toolbar',
         'django_nose',
+        'django_coverage',
     ]
 
 INSTALLED_APPS = tuple(apps_list)
