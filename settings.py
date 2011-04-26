@@ -301,10 +301,10 @@ apps_list = [
         'django.contrib.markup',
         'django.contrib.messages',
 
-        'TODO',
-        'your',
-        'apps',
-        'here',
+        #'your',
+        #'apps',
+        #'here',
+        'foo',
 ]
 
 if is_solo():
